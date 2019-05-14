@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Firewall's Stack OverFlow -- Email Verification</title>
+  <% include ./head.ejs %>
+</head>
+<body>
+  <% include ./navbar.ejs %><hr><br>
+<div class="container">
+  <h3 style="text-align: center;"> Stack OverFlow's Verification </h3>
+  <ul class="list-group" style="padding:0 1% 0 1%">
+			<li class="list-group-item list-group-header">Email Verification </li>
+			<li class="list-group-item list-body">
+         <form id="verify">
+            <div class="form-group">
+              <label for="email"  class="btn btn-secondary">Email:</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="key"  class="btn btn-secondary">Key:</label>
+                <input type="text" class="form-control" id="key" placeholder="Enter your key" name="key" required>
+              </div>
+              <button type="submit" class="btn btn-success" style="margin-left: 40%">Verify Your Account</button>
+          </form>
+        </li>
+		</ul><br>
+</div>
+
+​<script type="text/javascript">
+   $("#verify").submit(function(event){
+        event.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '/verify',
+        dataType: 'json',
+        data: JSON.stringify({
+           email: $("#email").val(),
+           key: $("#key").val()
+        }),
+        contentType: 'application/json',
+        success: function (res) {
+          if(res.status = 'OK')
+            window.location.href = '/';
+          else
+            alert(JSON.stringify(res))
+        },
+        error: function (err) {
+            alert(JSON.stringify(err))
+        }
+      });
+   });
+</script>
+</body>
+</html>
+​
